@@ -251,11 +251,12 @@ p.body-text {
   margin: 28px 0;
 }
 
-/* ── Metals breakdown (CSS treemap) ── */
+/* ── Metals breakdown (proportional single-row) ── */
 .metals-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-wrap: nowrap;
+  gap: 4px;
+  width: 100%;
   margin: 10px 0 6px;
 }
 .metal-tile {
@@ -266,16 +267,14 @@ p.body-text {
   align-items: center;
   text-align: center;
   color: #fff;
-  padding: 12px 8px;
+  padding: 8px 4px;
   cursor: default;
-  transition: transform 0.15s, box-shadow 0.15s;
-  position: relative;
   overflow: hidden;
+  min-width: 0;
+  height: 130px;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
-.metal-tile:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
-.metal-tile .m-name { font-size: 0.88rem; font-weight: 800; letter-spacing: 0.5px; }
-.metal-tile .m-val  { font-size: 1.5rem; font-weight: 900; line-height: 1.1; margin: 4px 0 2px; }
-.metal-tile .m-sub  { font-size: 0.68rem; opacity: 0.8; }
+.metal-tile:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.2); }
 .metals-total {
   display: flex;
   align-items: center;
@@ -377,7 +376,7 @@ strong.hl-grn  { color: var(--green);   font-weight: 800; }
     <div class="stats-row">
       <div class="stat-card">
         <span class="stat-number red">12%</span>
-        <span class="stat-desc">台灣手機回收率<br>（2022 年，歷年最高）</span>
+        <span class="stat-desc">2022年台灣手機回收率<br>已是歷年最高</span>
       </div>
       <div class="stat-card">
         <span class="stat-number blue">55%</span>
@@ -675,34 +674,74 @@ Chart.defaults.color = '#555';
   });
 })();
 
-// ── Chart 4: CSS tile grid ──
+// ── Chart 4: two-row proportional tiles ──
 (function(){
-  const metals = [
+  const row1 = [
     { name: '鈀', sym: 'Pd', val: 20.3, color: '#7d3c98' },
     { name: '金', sym: 'Au', val: 12.1, color: '#d4a017' },
-    { name: '銅', sym: 'Cu', val: 1.6,  color: '#ba4a00' },
-    { name: '錫', sym: 'Sn', val: 1.5,  color: '#117a65' },
-    { name: '鋁', sym: 'Al', val: 1.4,  color: '#5d6d7e' },
-    { name: '銀', sym: 'Ag', val: 1.3,  color: '#839192' },
+  ];
+  const row2 = [
+    { name: '銅', sym: 'Cu', val: 1.6, color: '#ba4a00' },
+    { name: '錫', sym: 'Sn', val: 1.5, color: '#117a65' },
+    { name: '鋁', sym: 'Al', val: 1.4, color: '#5d6d7e' },
+    { name: '銀', sym: 'Ag', val: 1.3, color: '#839192' },
   ];
   const total = 38.1;
-  const grid = document.getElementById('metalsGrid');
+  const grid  = document.getElementById('metalsGrid');
 
-  metals.forEach(m => {
-    const pct = (m.val / total * 100).toFixed(0);
-    // flex-basis proportional to value, min 100px
-    const basis = Math.max(100, Math.round(m.val / total * 600)) + 'px';
-    const tile = document.createElement('div');
-    tile.className = 'metal-tile';
-    tile.style.cssText = `background:${m.color}; flex: 1 1 ${basis}; min-width:90px;`;
-    tile.title = `${m.name}（${m.sym}）：${m.val} 元（占比 ${pct}%）`;
-    tile.innerHTML = `
-      <span class="m-name">${m.name}<span style="font-weight:400;opacity:0.75;font-size:0.72rem">（${m.sym}）</span></span>
-      <span class="m-val">${m.val} 元</span>
-      <span class="m-sub">${pct}%</span>
-    `;
-    grid.appendChild(tile);
-  });
+  // Override grid to vertical stack of two rows
+  grid.style.cssText = 'display:flex;flex-direction:column;gap:4px;width:100%;';
+
+  function makeRow(metals, height) {
+    const row = document.createElement('div');
+    row.style.cssText = `display:flex;flex-wrap:nowrap;gap:4px;width:100%;height:${height}px;`;
+    metals.forEach(m => {
+      const pct  = (m.val / total * 100).toFixed(1);
+      const tile = document.createElement('div');
+      tile.className = 'metal-tile';
+      tile.dataset.name = m.name;
+      tile.dataset.sym  = m.sym;
+      tile.dataset.val  = m.val;
+      tile.dataset.pct  = pct;
+      // flex proportional within this row
+      tile.style.cssText = `background:${m.color};flex:${m.val} 0 0;height:100%;`;
+      tile.title = `${m.name}（${m.sym}）：${m.val} 元（佔總計 ${pct}%）`;
+      row.appendChild(tile);
+    });
+    return row;
+  }
+
+  grid.appendChild(makeRow(row1, 120));
+  grid.appendChild(makeRow(row2, 72));
+
+  function fill(tile) {
+    const w = tile.offsetWidth;
+    const n = tile.dataset.name, s = tile.dataset.sym;
+    const v = tile.dataset.val,  p = tile.dataset.pct;
+    const h = tile.offsetHeight;
+    if (w >= 130) {
+      tile.innerHTML = `
+        <span style="font-size:.82rem;font-weight:800;white-space:nowrap">${n}（${s}）</span>
+        <span style="font-size:${h >= 100 ? 1.5 : 1.1}rem;font-weight:900;line-height:1.2;white-space:nowrap">${v} 元</span>
+        <span style="font-size:.65rem;opacity:.75">${p}%</span>`;
+    } else if (w >= 60) {
+      tile.innerHTML = `
+        <span style="font-size:.72rem;font-weight:800;white-space:nowrap">${n}</span>
+        <span style="font-size:.95rem;font-weight:900;white-space:nowrap">${v} 元</span>
+        <span style="font-size:.6rem;opacity:.72">${p}%</span>`;
+    } else if (w >= 28) {
+      tile.innerHTML = `<span style="font-size:.65rem;font-weight:800;writing-mode:vertical-rl">${n}</span>`;
+    } else {
+      tile.innerHTML = '';
+    }
+  }
+
+  function adjust() {
+    grid.querySelectorAll('.metal-tile').forEach(fill);
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(adjust));
+  window.addEventListener('resize', adjust);
 })();
 </script>
 </body>
