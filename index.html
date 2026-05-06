@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全台手機回收率僅12％ 為何民眾寧可將舊機放在家？</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1a1a1a;
+  --ink-muted: #555;
+  --ink-light: #888;
+  --rule: #ddd;
+  --bg: #f9f8f5;
+  --white: #fff;
+  --accent: #c0392b;
+  --accent2: #2471a3;
+  --green: #1e8449;
+  --card-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  --max-w: 860px;
+  --font: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+/* ── Header ── */
+header {
+  background: var(--white);
+  border-bottom: 3px double var(--ink);
+  padding: 28px 24px 20px;
+}
+.header-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
+}
+h1 {
+  font-size: clamp(1.55rem, 4vw, 2.15rem);
+  font-weight: 900;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--ink-light);
+  border-top: 1px solid var(--rule);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.meta-item { display: flex; align-items: center; gap: 4px; }
+.meta-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--ink-light); flex-shrink: 0;
+}
+
+/* ── Hero / 結論先講 ── */
+.hero {
+  background: var(--ink);
+  color: #fff;
+  padding: 36px 24px;
+}
+.hero-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.hero-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #aaa;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.hero-lead {
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: #e8e8e8;
+  margin-bottom: 28px;
+  border-left: 3px solid #555;
+  padding-left: 14px;
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 4px;
+}
+.stat-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 18px 14px;
+  text-align: center;
+}
+.stat-number {
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+  display: block;
+  margin-bottom: 6px;
+}
+.stat-number.red { color: #f1948a; }
+.stat-number.blue { color: #85c1e9; }
+.stat-number.yellow { color: #f9e79f; }
+.stat-desc {
+  font-size: 0.75rem;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+/* ── Main content ── */
+main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* ── Article text ── */
+.section-heading {
+  font-size: 1.22rem;
+  font-weight: 900;
+  color: var(--ink);
+  margin: 40px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-heading::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 1.2em;
+  background: var(--accent);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+p.body-text {
+  margin-bottom: 16px;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.quote-block {
+  margin: 22px 0;
+  padding: 16px 20px;
+  border-left: 4px solid var(--rule);
+  background: rgba(0,0,0,0.025);
+  font-style: italic;
+  color: var(--ink-muted);
+  font-size: 0.96rem;
+  line-height: 1.8;
+  border-radius: 0 4px 4px 0;
+}
+.quote-attr {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  font-style: normal;
+  color: var(--ink-light);
+  font-weight: 600;
+}
+
+/* ── Fact box ── */
+.fact-box {
+  background: #fffbf0;
+  border: 1px solid #f0d070;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+.fact-box-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #8a6800;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ── Chart cards ── */
+.chart-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px 20px 20px;
+  margin: 28px 0;
+  box-shadow: var(--card-shadow);
+}
+.chart-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.chart-subtitle {
+  font-size: 0.75rem;
+  color: var(--ink-light);
+  margin-bottom: 18px;
+}
+.chart-wrap {
+  position: relative;
+  height: 300px;
+}
+.chart-wrap.tall { height: 340px; }
+.chart-source {
+  font-size: 0.68rem;
+  color: var(--ink-light);
+  margin-top: 10px;
+  border-top: 1px solid var(--rule);
+  padding-top: 6px;
+}
+
+/* ── Two-col charts ── */
+.chart-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 28px 0;
+}
+
+/* ── Metals breakdown (CSS treemap) ── */
+.metals-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 6px;
+}
+.metal-tile {
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 12px 8px;
+  cursor: default;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.metal-tile:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+.metal-tile .m-name { font-size: 0.88rem; font-weight: 800; letter-spacing: 0.5px; }
+.metal-tile .m-val  { font-size: 1.5rem; font-weight: 900; line-height: 1.1; margin: 4px 0 2px; }
+.metal-tile .m-sub  { font-size: 0.68rem; opacity: 0.8; }
+.metals-total {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 6px;
+  border: 1px dashed #ccc;
+}
+.metals-total-label { font-size: 0.8rem; color: var(--ink-light); }
+.metals-total-val { font-size: 1.3rem; font-weight: 900; color: var(--accent); }
+.metals-total-vs { font-size: 0.78rem; color: var(--ink-light); margin-left: auto; }
+
+/* ── Comparison table ── */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 20px 0;
+}
+.compare-table th {
+  background: var(--ink);
+  color: #fff;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.compare-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: middle;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+.price-high { color: var(--accent); font-weight: 800; }
+.price-low  { color: var(--accent2); font-weight: 700; }
+
+/* ── Footer ── */
+footer {
+  background: var(--ink);
+  color: #aaa;
+  padding: 28px 24px;
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.footer-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+/* ── RWD ── */
+@media (max-width: 680px) {
+  .stats-row { grid-template-columns: 1fr; gap: 10px; }
+  .chart-duo { grid-template-columns: 1fr; }
+  h1 { font-size: 1.4rem; }
+  .chart-wrap { height: 260px; }
+  .chart-wrap.tall { height: 300px; }
+  .metal-tile .m-val { font-size: 1.2rem; }
+}
+
+/* ── Highlight inline ── */
+strong.hl-red  { color: var(--accent);  font-weight: 800; }
+strong.hl-blue { color: var(--accent2); font-weight: 800; }
+strong.hl-grn  { color: var(--green);   font-weight: 800; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="section-label">手機回收</div>
+    <h1>全台手機回收率僅12％<br>為何民眾寧可將舊機放在家？</h1>
+    <div class="meta">
+      <span class="meta-item">2024/11/7</span>
+      <span class="meta-dot"></span>
+      <span class="meta-item">文字／李宜靜</span>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">結論先講</div>
+    <p class="hero-lead">
+      台灣手機年銷售 500 萬支，2022 年回收率卻僅有 <strong style="color:#f1948a">12%</strong>，已是歷年最高。反觀電腦、印表機等資訊產品，平均回收率最高達 78%。環境部預計 2025 年推動手機專屬回收法案，目標 2026 年循環率達 15%。
+    </p>
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-number red">12%</span>
+        <span class="stat-desc">台灣手機回收率<br>（2022 年，歷年最高）</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number blue">55%</span>
+        <span class="stat-desc">民眾選擇將舊機<br>擱置在家中</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number yellow">3.6 年</span>
+        <span class="stat-desc">2023 年全球平均<br>換機週期</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Main content -->
+<main>
+
+  <p class="body-text" style="margin-top:32px">
+    台灣近年的手機年銷售數量約為 <strong>500 萬支</strong>，不過根據環境部統計，2022 年僅 <strong class="hl-red">12%</strong> 被替換掉的手機獲得回收，比例已是歷年最高；反觀電腦、印表機等資訊產品，平均回收率最高可達 <strong class="hl-blue">78%</strong>。據二手交易平台 SellCell 統計，2023 年全球平均換機週期約為 <strong>3.6 年</strong>。
+  </p>
+
+  <!-- Chart 1: Recovery rate trend -->
+  <div class="chart-card">
+    <div class="chart-title">台灣電子廢棄物回收率趨勢（2017–2022）</div>
+    <div class="chart-subtitle">手機與電腦、印表機回收率比較</div>
+    <div class="chart-wrap">
+      <canvas id="chart1"></canvas>
+    </div>
+    <div class="chart-source">資料來源：環境部統計</div>
+  </div>
+
+  <p class="body-text">
+    長期推動循環經濟的 REnato lab 創辦人王家祥說：「手機替換頻率高，但舊手機沒有被再利用，表示地球上的礦物將持續被開採來製造新產品。」
+  </p>
+
+  <p class="body-text">
+    環境部今（2024）年 8 月重新預告專屬於手機回收的法案，並預計於明年 1 月 1 日正式上路，草案中明定，至 2026 年時，各手機製造業者的「循環率」應達至少 15%。所謂循環率是指，該年度手機「回收」及「循環服務」總數量，除以前 3 年銷售數量的平均值，其中包含業者提供的手機租賃、舊機收購或維修等服務。
+  </p>
+
+  <p class="body-text">
+    其實該法案原定今年就上路，原本預告的目標為 2025 年能達 15%、2030 年達 30%，新版本修正為 2026 年達 15%，並刪除原設定 2030 年的目標。環境部循環署組長李宜樺表示，去年草案公告後，收到業者反映需要多一年的準備期，另外考量到歐盟、日本與美國目前回收率也僅約 15%，與原先設定的 30% 目標仍有所落差，因此改以訂定初步目標，實際試辦過後再重新檢討。
+  </p>
+
+  <!-- Section 1 -->
+  <h2 class="section-heading">55% 的舊手機閒置在家中　回收動力不足</h2>
+
+  <p class="body-text">
+    一般人用不到的舊手機會怎麼處置？根據環境部調查顯示，有 <strong class="hl-red">55%</strong> 的民眾選擇把手機擱置在家中收納，僅 18% 的人會進行資源回收，17% 則是進行轉賣或轉贈。換言之，舊手機最大的問題是因為沒有被視為廢棄物，而被民眾選擇繼續存放在家中。
+  </p>
+
+  <!-- Chart 2 & 3 side by side -->
+  <div class="chart-duo">
+    <div class="chart-card" style="margin:0">
+      <div class="chart-title">舊手機的去向</div>
+      <div class="chart-subtitle">民眾處置舊手機的方式分布</div>
+      <div class="chart-wrap">
+        <canvas id="chart2"></canvas>
+      </div>
+      <div class="chart-source">資料來源：環境部 2022 年問卷調查</div>
+    </div>
+    <div class="chart-card" style="margin:0">
+      <div class="chart-title">民眾不回收手機的五大原因</div>
+      <div class="chart-subtitle">以比例排序</div>
+      <div class="chart-wrap">
+        <canvas id="chart3"></canvas>
+      </div>
+      <div class="chart-source">資料來源：環境部 2022 年問卷調查</div>
+    </div>
+  </div>
+
+  <p class="body-text">
+    進一步探討民眾將手機擱置在家中的原因，包含無提供獎勵優惠、無方便回收地點等，另外部分民眾也對回收手機的資訊安全有所疑慮。對此李宜樺表示，新法案中已有規定，業者未來需提供資料銷毀服務，防止民眾個資外洩。
+  </p>
+
+  <p class="body-text">
+    王家祥則認為，電腦因體積較大、占用空間較多，使用者換機時通常會主動進行回收，但手機體積小、不占空間，加上購買價格較高，導致許多人將其存放家中，因此若沒有足夠的獎勵優惠，手機回收率恐怕仍難以提升。
+  </p>
+
+  <!-- Section 2 -->
+  <h2 class="section-heading">舊手機還有多少價值？廢棄與堪用價格大不同</h2>
+
+  <p class="body-text">
+    2006 年環境部就將手機公告為可回收項目，依法不能以一般垃圾丟棄，可以交由清潔隊，或自行拿到指定回收據點，如超商、通訊業者及品牌商門市等，但回收價格普遍偏低。
+  </p>
+
+  <div class="fact-box">
+    <div class="fact-box-title">回收獎勵比一比</div>
+    以超商的回收價而言，一部廢電腦可以折抵 <strong>120 元</strong>的購物金，但一台手機僅能折抵 <strong>12 元</strong>；若是拿去清潔隊回收，則無法獲得任何獎勵金。
+  </div>
+
+  <p class="body-text">
+    王家祥解析，目前舊手機的流向依據其狀態可區分為「二手轉賣」與「廢棄機」。若手機仍可使用，通常經過外觀清潔或零件修理後，即可轉售至對新機需求不高的個人或公司。然而，手機放越久價值越低，若沒有盡早賣出，最後仍然會成為電子廢棄物。
+  </p>
+
+  <!-- iPhone prices table -->
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>機型</th>
+        <th>最高換購價（蘋果官網，截至 2024/10/20）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>iPhone 15</td>
+        <td class="price-high">16,100 元</td>
+      </tr>
+      <tr>
+        <td>iPhone 8</td>
+        <td class="price-low">1,500 元</td>
+      </tr>
+      <tr>
+        <td>iPhone 7 以前</td>
+        <td style="color:#888">不再收購</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="body-text">
+    至於無法開機或無法被二手市場收購的手機，回收商會送至處理場進行分解並提煉金屬，剩下無法再利用的廢棄物最終仍得進入焚化爐。根據 2022 年 Apple 環境報告書，1 支 iPhone 分解後的貴金屬包含鈀、金、銀、錫、銅、鋁等，<strong class="hl-red">總價值僅 38.1 元</strong>，與原來 1 台售價 3 萬以上的價格相差甚遠。
+  </p>
+
+  <!-- Chart 4: Precious metals — CSS tile layout -->
+  <div class="chart-card">
+    <div class="chart-title">拆解 1 支 iPhone，能提煉出多少錢？</div>
+    <div class="chart-subtitle">各金屬殘值（元），合計僅 38.1 元</div>
+    <div class="metals-grid" id="metalsGrid"></div>
+    <div class="metals-total">
+      <span class="metals-total-label">6 種金屬合計</span>
+      <span class="metals-total-val">38.1 元</span>
+      <span class="metals-total-vs">原售價逾 30,000 元 → 殘值不到 0.2%</span>
+    </div>
+    <div class="chart-source">資料來源：2022 年 Apple 環境報告書、環境部計畫報告書</div>
+  </div>
+
+  <div class="quote-block">
+    「現在手機製造過程成本雖高，但因為零件越做越小，可提煉的金屬就會減少，廢手機的殘餘價值不高，也代表著回收價無法提高。延長 1 支手機可以被使用的生命週期就顯得更為重要。」
+    <span class="quote-attr">— 王家祥，REnato lab 創辦人</span>
+  </div>
+
+  <p class="body-text">
+    王家祥表示，該如何讓保存良好的舊手機，能在二手市場上繼續循環，直到手機真的不能用，才進入廢棄的階段，顯得格外重要。消費者換新機時，應盡早讓舊機進入二級市場，增加再利用機會。
+  </p>
+
+  <!-- Section 3 -->
+  <h2 class="section-heading">二手手機市場缺乏統一定價標準　民眾仍有所疑慮</h2>
+
+  <p class="body-text">
+    消費者對於二手市場的報價仍有所疑慮。楊家興指出，目前二手市場缺乏統一的評估和定價標準，部分業者可能以高價吸引顧客，但最終報出的收購價卻遠低於預期，因此，如何增加二手市場的透明度顯得重要。
+  </p>
+
+  <p class="body-text">
+    楊家興坦言，「二手機的價格浮動相當大，因為要考量的因素太多了。」在他經營的二手機平台後，是一筆大數據的支持。數據中涵蓋收購到的二手機庫存量、維修成本、該型號手機即時市場價，算出每個型號當時的最高二手價，再經由檢測軟體針對螢幕、機身與電池、藍牙、Wi-Fi 等功能進行測試，為每台手機分級定價。
+  </p>
+
+  <div class="quote-block">
+    「減少人工的主觀判斷，就能把收購流程透明化，才能讓消費者信任二手市場。」
+    <span class="quote-attr">— 楊家興，二手手機業者</span>
+  </div>
+
+  <p class="body-text">
+    二手價雖然不如新機穩定，但同時為消費者提供了更多選擇。楊家興提到，二手機不一定要修到「完美」才能出售，如藍牙或 Wi-Fi 功能對部分消費者來說並不重要，因此即便受損，以較優惠的價格出售更能滿足不同類型的手機使用者。
+  </p>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-title">資料來源</div>
+    <p>環境部統計 | 環境部 2022 年問卷調查 | 2022 年 Apple 環境報告書 | 環境部計畫報告書 | SellCell（2023 年全球換機週期報告）</p>
+  </div>
+</footer>
+
+<script>
+Chart.defaults.font.family = '"Noto Sans TC", "Microsoft JhengHei", sans-serif';
+Chart.defaults.color = '#555';
+
+// ── Chart 1: Line — no fill ──
+(function(){
+  const ctx = document.getElementById('chart1').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2017', '2018', '2019', '2020', '2021', '2022'],
+      datasets: [
+        {
+          label: '手機回收率 (%)',
+          data: [6, 8.6, 5.2, 5.2, 11.7, 12],
+          borderColor: '#c0392b',
+          backgroundColor: '#c0392b',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#c0392b',
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          fill: false,
+          tension: 0.35,
+        },
+        {
+          label: '電腦、印表機回收率 (%)',
+          data: [57.8, 60.8, 63.5, 78.1, 77.5, 66.9],
+          borderColor: '#2471a3',
+          backgroundColor: '#2471a3',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#2471a3',
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          fill: false,
+          tension: 0.35,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 14, padding: 18, font: { size: 12 }, usePointStyle: true } },
+        tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}%` } }
+      },
+      scales: {
+        y: {
+          min: 0, max: 90,
+          ticks: { callback: v => v + '%', font: { size: 11 } },
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        },
+        x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+})();
+
+// ── Chart 2: Doughnut ──
+(function(){
+  const ctx = document.getElementById('chart2').getContext('2d');
+  const labels = ['擱置家中', '資源回收', '轉賣/轉贈', '以舊換新', '一般垃圾'];
+  const data   = [55.3, 18.4, 17.8, 2.9, 1.3];
+  const colors = ['#1a1a1a', '#c0392b', '#2471a3', '#1e8449', '#888'];
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: '#fff', borderWidth: 3, hoverOffset: 10 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '58%',
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
+        tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed}%` } }
+      }
+    },
+    plugins: [{
+      id: 'centerText',
+      afterDraw(chart) {
+        const { ctx, chartArea: { width, height, left, top } } = chart;
+        ctx.save();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const cx = left + width / 2, cy = top + height / 2;
+        ctx.font = 'bold 22px "Noto Sans TC", sans-serif';
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillText('55.3%', cx, cy - 10);
+        ctx.font = '11px "Noto Sans TC", sans-serif';
+        ctx.fillStyle = '#888';
+        ctx.fillText('擱置家中', cx, cy + 14);
+        ctx.restore();
+      }
+    }]
+  });
+})();
+
+// ── Chart 3: Horizontal bar ──
+(function(){
+  const ctx = document.getElementById('chart3').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['無提供獎勵優惠', '無方便回收點', '等壞掉再回收', '無提供資料銷毀', '有保存價值'],
+      datasets: [{
+        label: '比例 (%)',
+        data: [34.6, 28.5, 11.5, 11.2, 5.1],
+        backgroundColor: [
+          'rgba(192,57,43,0.85)', 'rgba(192,57,43,0.65)',
+          'rgba(192,57,43,0.45)', 'rgba(192,57,43,0.35)', 'rgba(192,57,43,0.22)',
+        ],
+        borderColor: '#c0392b', borderWidth: 1, borderRadius: 4,
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ` ${c.parsed.x}%` } }
+      },
+      scales: {
+        x: { min: 0, max: 40, ticks: { callback: v => v + '%', font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.06)' } },
+        y: { ticks: { font: { size: 11 } }, grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── Chart 4: CSS tile grid ──
+(function(){
+  const metals = [
+    { name: '鈀', sym: 'Pd', val: 20.3, color: '#7d3c98' },
+    { name: '金', sym: 'Au', val: 12.1, color: '#d4a017' },
+    { name: '銅', sym: 'Cu', val: 1.6,  color: '#ba4a00' },
+    { name: '錫', sym: 'Sn', val: 1.5,  color: '#117a65' },
+    { name: '鋁', sym: 'Al', val: 1.4,  color: '#5d6d7e' },
+    { name: '銀', sym: 'Ag', val: 1.3,  color: '#839192' },
+  ];
+  const total = 38.1;
+  const grid = document.getElementById('metalsGrid');
+
+  metals.forEach(m => {
+    const pct = (m.val / total * 100).toFixed(0);
+    // flex-basis proportional to value, min 100px
+    const basis = Math.max(100, Math.round(m.val / total * 600)) + 'px';
+    const tile = document.createElement('div');
+    tile.className = 'metal-tile';
+    tile.style.cssText = `background:${m.color}; flex: 1 1 ${basis}; min-width:90px;`;
+    tile.title = `${m.name}（${m.sym}）：${m.val} 元（占比 ${pct}%）`;
+    tile.innerHTML = `
+      <span class="m-name">${m.name}<span style="font-weight:400;opacity:0.75;font-size:0.72rem">（${m.sym}）</span></span>
+      <span class="m-val">${m.val} 元</span>
+      <span class="m-sub">${pct}%</span>
+    `;
+    grid.appendChild(tile);
+  });
+})();
+</script>
+</body>
+</html>
